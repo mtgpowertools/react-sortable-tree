@@ -73,11 +73,6 @@
     "react-lifecycles-compat": "^3.0.4",
     "react-virtualized": "^9.21.2"
   },
-  "peerDependencies": {
-    "react": "^16.3.0",
-    "react-dnd": "^7.3.0",
-    "react-dom": "^16.3.0"
-  },
   "devDependencies": {
     "@babel/cli": "^7.7.0",
     "@babel/core": "^7.7.2",
