@@ -1,6 +1,6 @@
 .rst__placeholder {
   position: relative;
-  height: 68px;
+  height: 100px;
   max-width: 300px;
   padding: 10px;
 }
@@ -9,7 +9,6 @@
   box-sizing: border-box;
 }
 .rst__placeholder::before {
-  border: 3px dashed #d9d9d9;
   content: '';
   position: absolute;
   top: 5px;
@@ -34,7 +33,7 @@
 }
 .rst__placeholderLandingPad::before,
 .rst__placeholderCancelPad::before {
-  background-color: lightblue;
+  background-color: rgb(221, 209, 250);
   border-color: white;
 }
 
@@ -42,5 +41,5 @@
  * Alternate appearance of the landing pad when the dragged location is invalid
  */
 .rst__placeholderCancelPad::before {
-  background-color: #e6a8ad;
+  background-color: rgb(207, 190, 248);
 }
