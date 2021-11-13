@@ -482,7 +482,18 @@ class ReactSortableTree extends Component {
   }
 
   drop(dropResult) {
-    this.moveNode(dropResult);
+    const {
+      treeData,
+    } = insertNode({
+      treeData: this.state.instanceProps.treeData,
+      newNode: dropResult.node,
+      depth: 0,
+      minimumTreeIndex: this.state.instanceProps.treeData.length,
+      expandParent: true,
+      getNodeKey: this.props.getNodeKey,
+    });
+
+    this.props.onChange(treeData);
   }
 
   canNodeHaveChildren(node) {
