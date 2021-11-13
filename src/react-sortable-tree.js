@@ -673,15 +673,7 @@ class ReactSortableTree extends Component {
 
     let containerStyle = style;
     let list;
-    if (rows.length < 1) {
-      const Placeholder = this.treePlaceholderRenderer;
-      const PlaceholderContent = placeholderRenderer;
-      list = (
-        <Placeholder treeId={this.treeId} drop={this.drop}>
-          <PlaceholderContent />
-        </Placeholder>
-      );
-    } else if (isVirtualized) {
+     if (isVirtualized) {
       containerStyle = { height: '100%', ...containerStyle };
 
       const ScrollZoneVirtualList = this.scrollZoneVirtualList;
@@ -757,7 +749,17 @@ class ReactSortableTree extends Component {
           swapLength,
         })
       );
+
+      const Placeholder = this.treePlaceholderRenderer;
+      const PlaceholderContent = placeholderRenderer;
+      list.push(
+        <Placeholder treeId={this.treeId} drop={this.drop}>
+          <PlaceholderContent />
+        </Placeholder>
+      );
     }
+
+  
 
     return (
       <div
@@ -913,7 +915,7 @@ ReactSortableTree.defaultProps = {
   generateNodeProps: null,
   getNodeKey: defaultGetNodeKey,
   innerStyle: {},
-  isVirtualized: true,
+  isVirtualized: false,
   maxDepth: null,
   treeNodeRenderer: null,
   nodeContentRenderer: null,
