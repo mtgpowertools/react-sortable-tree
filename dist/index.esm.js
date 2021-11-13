@@ -3205,7 +3205,7 @@ function (_Component) {
         });
         var Placeholder = this.treePlaceholderRenderer;
         var PlaceholderContent = placeholderRenderer;
-        list.push(React.createElement(Placeholder, {
+        if (!this.state.draggingTreeData) list.push(React.createElement(Placeholder, {
           treeId: this.treeId,
           dropAtEnd: this.dropAtEnd
         }, React.createElement(PlaceholderContent, null)));

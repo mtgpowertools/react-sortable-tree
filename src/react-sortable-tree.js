@@ -782,7 +782,7 @@ class ReactSortableTree extends Component {
 
       const Placeholder = this.treePlaceholderRenderer;
       const PlaceholderContent = placeholderRenderer;
-      list.push(
+     if(!this.state.draggingTreeData) list.push(
         <Placeholder treeId={this.treeId} dropAtEnd={this.dropAtEnd}>
           <PlaceholderContent />
         </Placeholder>
