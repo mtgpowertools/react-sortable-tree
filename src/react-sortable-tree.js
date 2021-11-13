@@ -130,6 +130,7 @@ class ReactSortableTree extends Component {
     this.dragHover = this.dragHover.bind(this);
     this.endDrag = this.endDrag.bind(this);
     this.drop = this.drop.bind(this);
+    this.dropAtEnd = this.dropAtEnd.bind(this);
     this.handleDndMonitorChange = this.handleDndMonitorChange.bind(this);
   }
 
@@ -482,10 +483,24 @@ class ReactSortableTree extends Component {
   }
 
   drop(dropResult) {
+    console.log('drop', dropResult);
+    if(dropResult.isEnd  ){
+      this.dropAtEnd(dropResult);
+    }else{
+      this.moveNode(dropResult);
+
+    }
+  }  
+  
+  dropAtEnd(dropResult) {
+
+  console.log('dropResult', dropResult)
+  console.log('this.state', this.state)
+  if(!this.state.draggingTreeData?.length){
     const {
       treeData,
     } = insertNode({
-      treeData: this.state.instanceProps.treeData,
+      treeData:this.state.instanceProps.treeData,
       newNode: dropResult.node,
       depth: 0,
       minimumTreeIndex: this.state.instanceProps.treeData.length,
@@ -494,6 +509,10 @@ class ReactSortableTree extends Component {
     });
 
     this.props.onChange(treeData);
+  
+  }
+
+ 
   }
 
   canNodeHaveChildren(node) {
@@ -764,7 +783,7 @@ class ReactSortableTree extends Component {
       const Placeholder = this.treePlaceholderRenderer;
       const PlaceholderContent = placeholderRenderer;
       list.push(
-        <Placeholder treeId={this.treeId} drop={this.drop}>
+        <Placeholder treeId={this.treeId} dropAtEnd={this.dropAtEnd}>
           <PlaceholderContent />
         </Placeholder>
       );

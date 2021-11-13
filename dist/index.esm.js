@@ -2168,8 +2168,8 @@ function (_Component) {
           children = _this$props.children,
           connectDropTarget = _this$props.connectDropTarget,
           treeId = _this$props.treeId,
-          drop = _this$props.drop,
-          otherProps = _objectWithoutProperties(_this$props, ["children", "connectDropTarget", "treeId", "drop"]);
+          dropAtEnd = _this$props.dropAtEnd,
+          otherProps = _objectWithoutProperties(_this$props, ["children", "connectDropTarget", "treeId", "dropAtEnd"]);
 
       return connectDropTarget(React.createElement("div", null, Children.map(children, function (child) {
         return cloneElement(child, _objectSpread2({}, otherProps));
@@ -2192,7 +2192,7 @@ TreePlaceholder.propTypes = {
   canDrop: PropTypes.bool,
   draggedNode: PropTypes.shape({}),
   treeId: PropTypes.string.isRequired,
-  drop: PropTypes.func.isRequired
+  dropAtEnd: PropTypes.func.isRequired
 };
 
 function defaultGetNodeKey(_ref) {
@@ -2429,6 +2429,7 @@ function () {
             minimumTreeIndex: dropTargetProps.treeIndex,
             depth: _this2.getTargetDepth(dropTargetProps, monitor, component)
           };
+          console.log('droptarget', dropTargetProps);
 
           _this2.drop(result);
 
@@ -2492,10 +2493,15 @@ function () {
             minimumTreeIndex: 0,
             depth: 0
           };
+          console.log('droptarget', dropTargetProps);
 
-          _this3.drop(result);
+          _this3.drop(_objectSpread2(_objectSpread2({}, result), {}, {
+            isEnd: true
+          }));
 
-          return result;
+          return _objectSpread2(_objectSpread2({}, result), {}, {
+            isEnd: true
+          });
         }
       };
 
@@ -2688,6 +2694,7 @@ function (_Component) {
     _this.dragHover = _this.dragHover.bind(_assertThisInitialized(_this));
     _this.endDrag = _this.endDrag.bind(_assertThisInitialized(_this));
     _this.drop = _this.drop.bind(_assertThisInitialized(_this));
+    _this.dropAtEnd = _this.dropAtEnd.bind(_assertThisInitialized(_this));
     _this.handleDndMonitorChange = _this.handleDndMonitorChange.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -2954,17 +2961,35 @@ function (_Component) {
   }, {
     key: "drop",
     value: function drop(dropResult) {
-      var _insertNode2 = insertNode({
-        treeData: this.state.instanceProps.treeData,
-        newNode: dropResult.node,
-        depth: 0,
-        minimumTreeIndex: this.state.instanceProps.treeData.length,
-        expandParent: true,
-        getNodeKey: this.props.getNodeKey
-      }),
-          treeData = _insertNode2.treeData;
+      console.log('drop', dropResult);
 
-      this.props.onChange(treeData);
+      if (dropResult.isEnd) {
+        this.dropAtEnd(dropResult);
+      } else {
+        this.moveNode(dropResult);
+      }
+    }
+  }, {
+    key: "dropAtEnd",
+    value: function dropAtEnd(dropResult) {
+      var _this$state$draggingT;
+
+      console.log('dropResult', dropResult);
+      console.log('this.state', this.state);
+
+      if (!((_this$state$draggingT = this.state.draggingTreeData) === null || _this$state$draggingT === void 0 ? void 0 : _this$state$draggingT.length)) {
+        var _insertNode2 = insertNode({
+          treeData: this.state.instanceProps.treeData,
+          newNode: dropResult.node,
+          depth: 0,
+          minimumTreeIndex: this.state.instanceProps.treeData.length,
+          expandParent: true,
+          getNodeKey: this.props.getNodeKey
+        }),
+            treeData = _insertNode2.treeData;
+
+        this.props.onChange(treeData);
+      }
     }
   }, {
     key: "canNodeHaveChildren",
@@ -3182,7 +3207,7 @@ function (_Component) {
         var PlaceholderContent = placeholderRenderer;
         list.push(React.createElement(Placeholder, {
           treeId: this.treeId,
-          drop: this.drop
+          dropAtEnd: this.dropAtEnd
         }, React.createElement(PlaceholderContent, null)));
       }
 

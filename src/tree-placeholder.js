@@ -7,7 +7,7 @@ class TreePlaceholder extends Component {
       children,
       connectDropTarget,
       treeId,
-      drop,
+      dropAtEnd,
       ...otherProps
     } = this.props;
     return connectDropTarget(
@@ -36,7 +36,7 @@ TreePlaceholder.propTypes = {
   canDrop: PropTypes.bool,
   draggedNode: PropTypes.shape({}),
   treeId: PropTypes.string.isRequired,
-  drop: PropTypes.func.isRequired,
+  dropAtEnd: PropTypes.func.isRequired,
 };
 
 export default TreePlaceholder;

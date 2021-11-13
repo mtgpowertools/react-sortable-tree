@@ -210,6 +210,7 @@ export default class DndManager {
           depth: this.getTargetDepth(dropTargetProps, monitor, component),
         };
 
+        console.log('droptarget',dropTargetProps)
         this.drop(result);
 
         return result;
@@ -277,9 +278,11 @@ export default class DndManager {
           depth: 0,
         };
 
-        this.drop(result);
+        console.log('droptarget',dropTargetProps)
 
-        return result;
+        this.drop({...result, isEnd: true});
+
+        return {...result, isEnd: true};
       },
     };
 
