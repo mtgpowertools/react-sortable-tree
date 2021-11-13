@@ -2962,7 +2962,17 @@ function (_Component) {
   }, {
     key: "drop",
     value: function drop(dropResult) {
-      this.moveNode(dropResult);
+      var _insertNode2 = insertNode({
+        treeData: this.state.instanceProps.treeData,
+        newNode: dropResult.node,
+        depth: 0,
+        minimumTreeIndex: this.state.instanceProps.treeData.length,
+        expandParent: true,
+        getNodeKey: this.props.getNodeKey
+      }),
+          treeData = _insertNode2.treeData;
+
+      this.props.onChange(treeData);
     }
   }, {
     key: "canNodeHaveChildren",
