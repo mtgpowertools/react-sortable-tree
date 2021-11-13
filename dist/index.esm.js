@@ -3095,14 +3095,7 @@ function (_Component) {
       var containerStyle = style;
       var list;
 
-      if (rows.length < 1) {
-        var Placeholder = this.treePlaceholderRenderer;
-        var PlaceholderContent = placeholderRenderer;
-        list = React.createElement(Placeholder, {
-          treeId: this.treeId,
-          drop: this.drop
-        }, React.createElement(PlaceholderContent, null));
-      } else if (isVirtualized) {
+      if (isVirtualized) {
         containerStyle = _objectSpread2({
           height: '100%'
         }, containerStyle);
@@ -3175,6 +3168,12 @@ function (_Component) {
             swapLength: swapLength
           });
         });
+        var Placeholder = this.treePlaceholderRenderer;
+        var PlaceholderContent = placeholderRenderer;
+        list.push(React.createElement(Placeholder, {
+          treeId: this.treeId,
+          drop: this.drop
+        }, React.createElement(PlaceholderContent, null)));
       }
 
       return React.createElement("div", {
@@ -3438,7 +3437,7 @@ ReactSortableTree.defaultProps = {
   generateNodeProps: null,
   getNodeKey: defaultGetNodeKey,
   innerStyle: {},
-  isVirtualized: true,
+  isVirtualized: false,
   maxDepth: null,
   treeNodeRenderer: null,
   nodeContentRenderer: null,
