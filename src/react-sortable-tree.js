@@ -483,7 +483,6 @@ class ReactSortableTree extends Component {
   }
 
   drop(dropResult) {
-    console.log('drop', dropResult);
     if(dropResult.isEnd  ){
       this.dropAtEnd(dropResult);
     }else{
@@ -494,8 +493,6 @@ class ReactSortableTree extends Component {
   
   dropAtEnd(dropResult) {
 
-  console.log('dropResult', dropResult)
-  console.log('this.state', this.state)
   if(!this.state.draggingTreeData?.length){
     const {
       treeData,
@@ -782,7 +779,7 @@ class ReactSortableTree extends Component {
 
       const Placeholder = this.treePlaceholderRenderer;
       const PlaceholderContent = placeholderRenderer;
-     if(!this.state.draggingTreeData) list.push(
+     if(!this.state.draggingTreeData && !this.props.dragFromOnly) list.push(
         <Placeholder treeId={this.treeId} dropAtEnd={this.dropAtEnd}>
           <PlaceholderContent />
         </Placeholder>
@@ -934,6 +931,9 @@ ReactSortableTree.propTypes = {
 
   // rtl support
   rowDirection: PropTypes.string,
+
+  // If true, tree will be read only
+  dragFromOnly: PropTypes.bool,
 };
 
 ReactSortableTree.defaultProps = {
@@ -966,6 +966,7 @@ ReactSortableTree.defaultProps = {
   onDragStateChanged: () => {},
   onlyExpandSearchedNodes: false,
   rowDirection: 'ltr',
+  dragFromOnly: false
 };
 
 polyfill(ReactSortableTree);

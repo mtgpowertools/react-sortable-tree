@@ -2961,8 +2961,6 @@ function (_Component) {
   }, {
     key: "drop",
     value: function drop(dropResult) {
-      console.log('drop', dropResult);
-
       if (dropResult.isEnd) {
         this.dropAtEnd(dropResult);
       } else {
@@ -2973,9 +2971,6 @@ function (_Component) {
     key: "dropAtEnd",
     value: function dropAtEnd(dropResult) {
       var _this$state$draggingT;
-
-      console.log('dropResult', dropResult);
-      console.log('this.state', this.state);
 
       if (!((_this$state$draggingT = this.state.draggingTreeData) === null || _this$state$draggingT === void 0 ? void 0 : _this$state$draggingT.length)) {
         var _insertNode2 = insertNode({
@@ -3205,7 +3200,7 @@ function (_Component) {
         });
         var Placeholder = this.treePlaceholderRenderer;
         var PlaceholderContent = placeholderRenderer;
-        if (!this.state.draggingTreeData) list.push(React.createElement(Placeholder, {
+        if (!this.state.draggingTreeData && !this.props.dragFromOnly) list.push(React.createElement(Placeholder, {
           treeId: this.treeId,
           dropAtEnd: this.dropAtEnd
         }, React.createElement(PlaceholderContent, null)));
@@ -3459,7 +3454,9 @@ ReactSortableTree.propTypes = {
   // Specify that nodes that do not match search will be collapsed
   onlyExpandSearchedNodes: PropTypes.bool,
   // rtl support
-  rowDirection: PropTypes.string
+  rowDirection: PropTypes.string,
+  // If true, tree will be read only
+  dragFromOnly: PropTypes.bool
 };
 ReactSortableTree.defaultProps = {
   canDrag: true,
@@ -3492,7 +3489,8 @@ ReactSortableTree.defaultProps = {
   theme: {},
   onDragStateChanged: function onDragStateChanged() {},
   onlyExpandSearchedNodes: false,
-  rowDirection: 'ltr'
+  rowDirection: 'ltr',
+  dragFromOnly: false
 };
 polyfill(ReactSortableTree);
 
